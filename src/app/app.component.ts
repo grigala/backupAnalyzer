@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FileSystemNode } from './file-system-node';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,7 +16,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get('assets/size-filename.log', { responseType: 'text' })
+      .get('./assets/size-filename-small.log', { responseType: 'text' })
       .subscribe((data: any) => {
         for (const line of data.split(/[\r\n]+/)) {
           if (line.length > 1) {

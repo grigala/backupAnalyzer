@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { faFolderMinus } from '@fortawesome/free-solid-svg-icons';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
-import { FileSystemNode } from '../app.component';
+import { FileSystemNode } from '../file-system-node';
 
 @Component({
   selector: 'app-tree',
@@ -23,6 +23,6 @@ export class TreeComponent implements OnInit {
   }
 
   toggleDisplayChildren(element: FileSystemNode): void{
-    element.showChildren = element.showChildren ? false : true;
+    element.showChildren = !element.showChildren;
   }
 }

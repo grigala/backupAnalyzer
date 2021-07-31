@@ -1,0 +1,17 @@
+.tree-disclosure-node > .arrow {
+  -fx-scale: 2.0;
+  -fx-shape: "M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z";
+  -fx-scale-shape: true;
+  -fx-min-height: 12px;
+  -fx-min-width: 12px;
+}
+
+.tree-cell .ikonli-font-icon {
+  -fx-indent: 20pt;
+  -fx-icon-code: "mdi2f-folder-plus";
+  -fx-icon-size: 20px;
+}
+
+.tree-cell:expanded .ikonli-font-icon {
+  -fx-icon-code: "mdi2f-folder-outline";
+}
