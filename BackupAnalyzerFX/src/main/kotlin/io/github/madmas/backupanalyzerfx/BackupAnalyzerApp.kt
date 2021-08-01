@@ -49,12 +49,23 @@ class BackupAnalyzerApp : Application() {
 
   private fun addToTheTree(path: String, size: ULong) {
     var n = rootItem
-    for (element: String in path.split("/")) {
-      n = addNode(n, element, size)
-      // TODO sort children
+
+    val comparator: (o1: TreeItem<String>, o2: TreeItem<String>) -> Int = { o1, o2 ->
+      val o1Size = o1.value.substringAfter("(").substringBefore(")")
+      val o1SizeInBytes = Utils.humanReadableToBytes(o1Size)
+
+      val o2Size = o2.value.substringAfter("(").substringBefore(")")
+      val o2SizeInBytes = Utils.humanReadableToBytes(o2Size)
+      compareValues(o2SizeInBytes, o1SizeInBytes)
     }
 
+    for (element: String in path.split("/")) {
+      n = addNode(n, element, size)
+      n.children.sortWith(comparator)
+    }
+    rootItem.children.sortWith(comparator)
   }
+
 
   private fun addNode(node: TreeItem<String>, folder: String, size: ULong): TreeItem<String> {
     return if (node.children.any { n -> n.value.split(" ")[0] == folder }) {
