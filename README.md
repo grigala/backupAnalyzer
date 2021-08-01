@@ -11,10 +11,12 @@ cat backupsize.log  | awk '{print $4 " "  $8}' > size-filename.log
 
 That way I got something similar to `ncdu` to realize what might be eating up my backup space ;-). It does not take into account the deduplication featuers of borg backup, tho.
 
-## Screenshot
-
+## Screenshots
+### Web version:
 <img width="353" alt="Screenshot BackupAnalyzer" src="https://user-images.githubusercontent.com/37251/123536799-aca59e00-d72c-11eb-8d6e-39440ee9611d.png">
 
+### JavaFX version:
+<img alt="Screenshot BackupAnalyzerFX" src="https://user-images.githubusercontent.com/2084794/127773216-921b7fd4-7ec6-4d97-8f19-468c1b6d6b13.png">
 
 
 ## Development server
