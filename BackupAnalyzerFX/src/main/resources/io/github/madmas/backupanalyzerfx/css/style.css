@@ -15,3 +15,9 @@
 .tree-cell:expanded .ikonli-font-icon {
   -fx-icon-code: "mdi2f-folder-outline";
 }
+
+.tree-cell .file {
+  -fx-indent: 20px;
+  -fx-icon-code: "mdi2f-file";
+  -fx-icon-size: 20px;
+}

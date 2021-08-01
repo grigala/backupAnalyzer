@@ -9,15 +9,24 @@ import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView
 
 object Utils {
-  fun byteCountOf(bytes: Long) = when {
-    bytes == Long.MIN_VALUE || bytes < 0 -> "N/A"
-    bytes < 1024L -> "$bytes B"
-    bytes <= 0xfffccccccccccccL shr 40 -> "%.1f KB".format(bytes.toDouble() / (0x1 shl 10))
-    bytes <= 0xfffccccccccccccL shr 30 -> "%.1f MB".format(bytes.toDouble() / (0x1 shl 20))
-    bytes <= 0xfffccccccccccccL shr 20 -> "%.1f GB".format(bytes.toDouble() / (0x1 shl 30))
-    bytes <= 0xfffccccccccccccL shr 10 -> "%.1f TB".format(bytes.toDouble() / (0x1 shl 40))
-    bytes <= 0xfffccccccccccccL -> "%.1f PB".format((bytes shr 10).toDouble() / (0x1 shl 40))
-    else -> "%.1f EiB".format((bytes shr 20).toDouble() / (0x1 shl 40))
+  fun byteCountOf(bytes: ULong) = when {
+    bytes < 1024UL -> Pair("$bytes B", bytes)
+    bytes <= 0xfffccccccccccccUL shr 40 -> Pair("%.2f KB".format(bytes.toDouble() / (0x1 shl 10)), bytes)
+    bytes <= 0xfffccccccccccccUL shr 30 -> Pair("%.2f MB".format(bytes.toDouble() / (0x1 shl 20)), bytes)
+    bytes <= 0xfffccccccccccccUL shr 20 -> Pair("%.2f GB".format(bytes.toDouble() / (0x1 shl 30)), bytes)
+    bytes <= 0xfffccccccccccccUL shr 10 -> Pair("%.2f TB".format(bytes.toDouble() / (0x1 shl 40)), bytes)
+    bytes <= 0xfffccccccccccccUL -> Pair("%.2f PB".format((bytes shr 10).toDouble() / (0x1 shl 40)), bytes)
+    else -> Pair("%.2f EiB".format((bytes shr 20).toDouble() / (0x1 shl 40)), bytes)
+  }
+
+  fun humanReadableToBytes(bytes: String) = when {
+    bytes.contains(" B") -> "%.0f".format(bytes.split(" ")[0].toDouble()).toULong()
+    bytes.contains("KB") -> "%.0f".format(bytes.split(" ")[0].toDouble() * (0x1 shl 10)).toULong()
+    bytes.contains("MB") -> "%.0f".format(bytes.split(" ")[0].toDouble() * (0x1 shl 20)).toULong()
+    bytes.contains("GB") -> "%.0f".format(bytes.split(" ")[0].toDouble() * (0x1 shl 30)).toULong()
+    bytes.contains("TB") -> "%.0f".format(bytes.split(" ")[0].toDouble() * (0x1 shl 40)).toULong()
+    // TODO ADD PB AND EIB CONVERSION
+    else -> ULong.MAX_VALUE
   }
 
   fun expandedChangeListener(treeView: TreeView<String>) = ChangeListener {
